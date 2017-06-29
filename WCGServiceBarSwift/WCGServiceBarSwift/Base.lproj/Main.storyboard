@@ -20,46 +20,11 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jCi-Op-7gr">
-                                <rect key="frame" x="0.0" y="621" width="375" height="46"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xbd-5a-CeB">
-                                        <rect key="frame" x="8" y="5" width="36" height="36"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="36" id="G6o-vz-Pfo"/>
-                                            <constraint firstAttribute="width" constant="36" id="svV-oa-JY7"/>
-                                        </constraints>
-                                        <state key="normal" image="keyMenu"/>
-                                        <connections>
-                                            <action selector="btnClickAction:" destination="BYZ-38-t0r" eventType="touchDragInside" id="WjP-x0-cyk"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                                <constraints>
-                                    <constraint firstItem="xbd-5a-CeB" firstAttribute="leading" secondItem="jCi-Op-7gr" secondAttribute="leading" constant="8" id="SJb-XR-tqX"/>
-                                    <constraint firstAttribute="height" constant="46" id="VCI-xq-6jM"/>
-                                    <constraint firstItem="xbd-5a-CeB" firstAttribute="top" secondItem="jCi-Op-7gr" secondAttribute="top" constant="5" id="a0r-1p-Vp8"/>
-                                </constraints>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        <constraints>
-                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="jCi-Op-7gr" secondAttribute="bottom" id="AXI-gF-jrP"/>
-                            <constraint firstItem="jCi-Op-7gr" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="tw6-R9-z3o"/>
-                            <constraint firstAttribute="trailing" secondItem="jCi-Op-7gr" secondAttribute="trailing" id="xsc-7j-hcX"/>
-                        </constraints>
                     </view>
-                    <connections>
-                        <outlet property="chatToolBar" destination="jCi-Op-7gr" id="D2I-Ie-Hse"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
         </scene>
     </scenes>
-    <resources>
-        <image name="keyMenu" width="25" height="25"/>
-    </resources>
 </document>

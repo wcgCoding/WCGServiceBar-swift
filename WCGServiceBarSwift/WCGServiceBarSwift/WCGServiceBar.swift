@@ -18,7 +18,7 @@ protocol WCGServiceBarDeleage:NSObjectProtocol {
 
 class WCGServiceBar: UIView,WCGServiceBtnViewDelegate {
     
-    weak open var delegate: WCGServiceBarDeleage?
+    weak open var delegate: WCGServiceBarDeleage?    
     var menuArr: [String]?{
         willSet{
             if (menuArr != nil)&&(menuArr!.count > 0){
@@ -215,27 +215,11 @@ class WCGServiceBar: UIView,WCGServiceBtnViewDelegate {
     
     public func hiddenToolBar(){
         hiddenSubMenu()
-        
-        UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: {
-          
-            self.viewY = CGFloat(WCGScreenHeight)
-        }) { (finished) in
-            if finished {
-                self.delegate?.didHiddenKeyBoardBtn(self)
-            }
-        }
-        
+        self.delegate?.didHiddenKeyBoardBtn(self)
     }
     
     public func showToolBar(){
-        UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: { 
-            //做一个分类
-            self.viewY = CGFloat(WCGScreenHeight - WCGServiceBarHeight)
-        }) { (finished) in
-            if finished{
-                self.delegate?.didShowKeyBoardBtn(self)
-            }
-        }
+        self.delegate?.didShowKeyBoardBtn(self)
     }
     
     /// MARK-:代理方法

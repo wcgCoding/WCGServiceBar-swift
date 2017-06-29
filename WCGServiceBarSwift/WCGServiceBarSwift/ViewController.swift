@@ -9,43 +9,85 @@
 import UIKit
 
 class ViewController: UIViewController,WCGServiceBarDeleage {
-
-    var serviceBar: WCGServiceBar?
-    var bottomConstraint: ConstraintMakerEditable?
     
-    @IBOutlet weak var chatToolBar: UIView!
+    var isServiceMenuOPEN: Bool = true{
+        didSet{
+            let serviceBarOffset: Float = Float(isServiceMenuOPEN ? 0.0 : WCGServiceBarHeight)
+            let chatToolbarOffset: Float = Float(isServiceMenuOPEN ? WCGServiceBarHeight : 0.0)
+                        
+            UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: { 
+                self.serviceBar.snp.updateConstraints({ (make) in
+                    make.bottom.equalTo(self.view).offset(serviceBarOffset)
+                })
+                
+                self.chatToolBar.snp.updateConstraints { (make) in
+                    make.bottom.equalTo(self.view).offset(chatToolbarOffset)
+                }
+                print("当前的线程是:\(Thread.current)")
+                self.view.layoutIfNeeded()
+                
+            }) { (isFinished) in
+                guard isFinished else {
+                    return
+                }
+                if !self.isServiceMenuOPEN {
+                    self.serviceBar.hiddenToolBar()
+                }else{
+                    self.serviceBar.showToolBar()
+                }
+            }
+        }
+    }
+
+    
+    lazy fileprivate var chatToolBar: UIView = {
+        var toolBar = UIView()
+        toolBar.backgroundColor = WCGColorRGB.color(r: 243, g: 243, b: 243)
+        
+        let btn = UIButton(type: .custom)
+        btn.setImage(UIImage(named: "keyMenu"), for: .normal)
+        btn.addTarget(self, action: #selector(btnClickAction), for: .touchUpInside)
+        toolBar.addSubview(btn)
+        btn.snp.makeConstraints({ (make) in
+            make.left.equalTo(toolBar.snp.left).offset(8)
+            make.centerY.equalTo(toolBar.snp.centerY)
+            make.size.equalTo(CGSize(width: 36, height: 36))
+        })
+        return toolBar
+    }()
+    
+    lazy fileprivate var serviceBar: WCGServiceBar = {
+        var bar = WCGServiceBar.serviceBarWithMenuArr(["主菜单0","主菜单1","主菜单2"])
+        bar.delegate = self
+        return bar
+    }()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-        
-        chatToolBar.snp.updateConstraints { (make) in
+        self.view.addSubview(chatToolBar)
+        chatToolBar.snp.makeConstraints { (make) in
             make.left.right.equalTo(self.view)
-            make.height.equalTo(46)
-            self.bottomConstraint = make.bottom.equalTo(self.view)
-        }
-        
-        serviceBar = WCGServiceBar.serviceBarWithMenuArr(["主菜单0","主菜单1","主菜单2"])
-        serviceBar?.delegate = self
-        self.view.addSubview(serviceBar!)
-        serviceBar?.snp.makeConstraints({ (make) in
+            make.bottom.equalTo(self.view)
             make.height.equalTo(WCGServiceBarHeight)
-            make.left.right.bottom.equalTo(self.view)
+        }
+
+        self.view.addSubview(serviceBar)
+        serviceBar.snp.makeConstraints({ (make) in
+            make.height.equalTo(WCGServiceBarHeight)
+            make.bottom.equalTo(self.view)
+            make.left.right.equalTo(self.view)
         })
-        
         
     }
 
-    @IBAction func btnClickAction(_ sender: Any) {
-        self.bottomConstraint?.offset(CGFloat(WCGScreenHeight))
-        UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: {
-            self.view.layoutIfNeeded()
-        }) { (finished) in
-            
-        }
-        serviceBar?.showToolBar()
+    func btnClickAction() {
+        isServiceMenuOPEN = true
     }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        serviceBar?.hiddenSubMenu()
+        serviceBar.hiddenSubMenu()
     }
 
     
@@ -54,18 +96,10 @@ class ViewController: UIViewController,WCGServiceBarDeleage {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     
     /// MARK-:代理
     func didClickKeyBoardBtn(_ bar: WCGServiceBar, btn: UIButton) {
-        serviceBar?.hiddenToolBar()
-        self.bottomConstraint?.offset(CGFloat(WCGScreenHeight - WCGServiceBarHeight))
-
-        UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: {
-            self.view.layoutIfNeeded()
-        }) { (finished) in
-            
-        }
+        isServiceMenuOPEN = false
     }
     
     func didSelected(_ section: NSInteger, row: NSInteger) {

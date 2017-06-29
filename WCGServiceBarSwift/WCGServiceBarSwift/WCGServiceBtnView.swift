@@ -18,7 +18,7 @@ protocol WCGServiceBtnViewDelegate:NSObjectProtocol {
 class WCGServiceBtnView: UIView, WCGSerivcePanelDelegate{
 
     weak open var delegate: WCGServiceBtnViewDelegate?
-    var topConstarint: ConstraintMakerEditable?
+//    var topConstarint: ConstraintMakerEditable?
     lazy public var panel: WCGServiceBarPanel = {
         return  WCGServiceBarPanel()
     }()
@@ -31,7 +31,7 @@ class WCGServiceBtnView: UIView, WCGSerivcePanelDelegate{
             }
             self.insertSubview(panel, at: 0)
             panel.snp.makeConstraints { (make) in
-               self.topConstarint = make.top.equalToSuperview().offset(WCGServiceBarHeight)
+                make.top.equalToSuperview().offset(WCGServiceBarHeight)
                 make.centerX.equalTo(self.snp.centerX)
                 make.size.equalTo(CGSize.init(width: CGFloat(panel.panelWidth), height: CGFloat(panel.panelHeight)))
             }
