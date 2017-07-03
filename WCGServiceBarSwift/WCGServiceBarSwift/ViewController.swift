@@ -14,7 +14,7 @@ class ViewController: UIViewController,WCGServiceBarDeleage {
         didSet{
             let serviceBarOffset: Float = Float(isServiceMenuOPEN ? 0.0 : WCGServiceBarHeight)
             let chatToolbarOffset: Float = Float(isServiceMenuOPEN ? WCGServiceBarHeight : 0.0)
-                        
+            
             UIView.animate(withDuration: WCGServiceBarAnimationDuration, animations: { 
                 self.serviceBar.snp.updateConstraints({ (make) in
                     make.bottom.equalTo(self.view).offset(serviceBarOffset)
@@ -42,7 +42,7 @@ class ViewController: UIViewController,WCGServiceBarDeleage {
     
     lazy fileprivate var chatToolBar: UIView = {
         var toolBar = UIView()
-        toolBar.backgroundColor = WCGColorRGB.color(r: 243, g: 243, b: 243)
+        toolBar.backgroundColor = WCGColorRGB(r: 243, g: 243, b: 243).color
         
         let btn = UIButton(type: .custom)
         btn.setImage(UIImage(named: "keyMenu"), for: .normal)
