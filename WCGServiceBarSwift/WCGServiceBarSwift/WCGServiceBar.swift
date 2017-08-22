@@ -234,7 +234,7 @@ class WCGServiceBar: UIView,WCGServiceBtnViewDelegate {
             })
         }
         
-        if btnview.subMenus?.count == 0{
+        if btnview.subMenus == nil || btnview.subMenus?.count == 0 {
             delegate?.didSelected(section, row: 0)
             return
         }
